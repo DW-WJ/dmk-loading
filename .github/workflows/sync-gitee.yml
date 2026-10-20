@@ -1,0 +1,29 @@
+name: Sync to Gitee
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    # 认准 GitHub 为唯一主仓库，Gitee 仅作镜像。
+    # 禁止在 Gitee 直接提交，避免双向同步分叉。
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 拉全量历史，便于完整镜像
+
+      - name: Install Gitee SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.GITEE_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t rsa gitee.com >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Mirror to Gitee
+        run: |
+          git remote add gitee git@gitee.com:duan-mingkun/dmk-loading.git
+          git push gitee main --force
