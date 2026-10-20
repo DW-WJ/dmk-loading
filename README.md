@@ -2,7 +2,7 @@
 
 框架无关的全局/局部加载遮罩库。**装完即用，页面不再维护任何 loading 变量和模板绑定** —— 请求开始 `openLoading()`，请求结束 `closeLoading()`，完事。
 
-内核是纯 TypeScript，零框架运行时依赖 —— 同一套逻辑直接跑在 Vue / React / UniApp / 鸿蒙 ArkTS 上。
+内核是纯 TypeScript，零框架运行时依赖 —— 同一套状态机直接驱动各框架适配层。**Vue / React 已适配**（同款 API、同款指示器/过渡/无障碍）；UniApp / 鸿蒙 ArkTS 适配规划中。
 
 ## 📚 文档
 
@@ -50,6 +50,47 @@ createApp(App).use(TransitionLoading, {
   lockScroll: true
 }).mount('#app')
 ```
+
+## React 使用
+
+React 适配层复用同一套 core 状态机，API 与 Vue 完全一致，只需用 `<LoadingProvider>` 在根部挂载一次：
+
+```tsx
+// main.tsx
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { LoadingProvider, useLoading } from 'dmk-loading/react'
+import 'dmk-loading/style.css' // 样式需自行引入一次（与 Vue 一致）
+
+createRoot(document.getElementById('root')!).render(
+  <LoadingProvider>
+    <App />
+  </LoadingProvider>
+)
+```
+
+业务组件里直接调命令式 API，**不需要任何 loading 状态**：
+
+```tsx
+import { useLoading } from 'dmk-loading/react'
+
+function UserList() {
+  const { open, close, withLoading } = useLoading()
+
+  const load = () =>
+    withLoading(fetch('/api/users').then((r) => r.json()), {
+      text: '加载用户中...',
+      spinner: 'dots'
+    })
+
+  // 或手动：open(); try { ... } finally { close() }
+  return <button onClick={load}>加载</button>
+}
+```
+
+- 全局 / 局部遮罩、并发令牌计数、delay/minDuration 防闪烁、6 种指示器 × 5 种过渡、无障碍降级，全部与 Vue 一致。
+- 局部遮罩用 `openLoading(target)`：传 CSS 选择器、ref、或 DOM 实例即可，库自动给宿主加 `relative` 并 `aria-busy`。
+- `react` / `react-dom` 为 peerDependency（≥17），由你的项目提供，不会重复打包。
 
 ## 核心用法：请求 → 开启 → 更新 → 关闭
 

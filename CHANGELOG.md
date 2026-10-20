@@ -3,6 +3,18 @@
 本文件记录本库的重要变更。
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased]
+
+### React 适配层（新增 `dmk-loading/react` 入口）
+
+- **框架矩阵第二棒落地**：core 状态机零改动，新增 React 宿主层，与 Vue 共享同一套逻辑。
+- `<LoadingProvider>`：应用根部挂载一次，自动渲染「全局遮罩 + 所有局部遮罩」（局部用 `createPortal` 挂到目标元素内）。
+- `useLoading()`：返回与 Vue 适配层完全对齐的命令式 API（open/close/closeAll/update/withLoading/...）。
+- 指示器 / 过渡 / 无障碍的视觉**直接复用全局 `style.css` 的 `.vtl-*` 类**，不重写样式；进出场过渡复刻 Vue `<Transition>` 的类名时序。
+- 兼容 React 17+（订阅用 `useState + useEffect`，不依赖 `useSyncExternalStore`）。
+- `react` / `react-dom` 设为 peerDependency（≥17），由消费方提供。
+- 构建产物：`dist/react.js` + `dist/react.d.ts`（`vite.react.config.ts` + `tsconfig.react.json`）。
+
 ## [1.0.0]
 
 ### 架构

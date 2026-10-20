@@ -1,7 +1,7 @@
 {
   "name": "dmk-loading",
   "version": "1.0.0",
-  "description": "框架无关的过渡动画加载库。装完即用，页面零 import：请求前后调 openLoading()/closeLoading() 即可，遮罩的显示、定位、并发计数、防闪烁全部由库内部接管。core 纯 TS 零运行时依赖，Vue/React/UniApp/鸿蒙 共享同一套逻辑。",
+  "description": "框架无关的过渡动画加载库。装完即用，页面零 import：请求前后调 openLoading()/closeLoading() 即可，遮罩的显示、定位、并发计数、防闪烁全部由库内部接管。core 纯 TS 零运行时依赖，Vue / React 已适配，UniApp / 鸿蒙 规划中。",
   "type": "module",
   "license": "MIT",
   "keywords": [
@@ -44,6 +44,10 @@
     "./core": {
       "types": "./dist/core/standalone.d.ts",
       "import": "./dist/core/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
     }
   },
   "files": [
@@ -58,7 +62,7 @@
   ],
   "scripts": {
     "dev": "vite -c vite.dev.config.ts",
-    "build": "vue-tsc --noEmit && vite build && vite build -c vite.plugin.config.ts && vite build -c vite.core.config.ts && vue-tsc -p tsconfig.build.json && vue-tsc -p tsconfig.core.json && node scripts/copy-global-dts.mjs",
+    "build": "vue-tsc --noEmit && vite build && vite build -c vite.plugin.config.ts && vite build -c vite.core.config.ts && vue-tsc -p tsconfig.build.json && vue-tsc -p tsconfig.core.json && node scripts/copy-global-dts.mjs && npm run build:react",
     "preview": "vite preview",
     "check:sfc": "node scripts/check-sfc.mjs",
     "test": "npm run check:sfc && npm run test:core && npm run test:func && npm run test:auto-import && npm run test:package",
@@ -68,6 +72,7 @@
     "build:core": "vite build -c vite.core.config.ts && vue-tsc -p tsconfig.core.json",
     "test:core-standalone": "node scripts/verify-core-standalone.mjs",
     "build:vite-plugin": "vite build -c vite.plugin.config.ts",
+    "build:react": "vite build -c vite.react.config.ts && tsc -p tsconfig.react.json",
     "test:auto-import": "node scripts/verify-auto-import.mjs",
     "measure:imports": "node scripts/measure-imports.mjs",
     "measure:pages": "node scripts/measure-multi-page.mjs",
@@ -77,10 +82,16 @@
     "test:e2e:a11y": "node scripts/e2e-a11y.mjs"
   },
   "peerDependencies": {
-    "vue": "^3.3.0"
+    "vue": "^3.3.0",
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vue": "^3.5.12",

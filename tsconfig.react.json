@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist",
+    "noEmit": false,
+    "rootDir": "src",
+    "types": ["react", "react-dom", "vite/client"]
+  },
+  "include": [
+    "src/react/**/*.tsx",
+    "src/react/**/*.ts",
+    "src/env.d.ts",
+    "src/lib/core/**/*.ts",
+    "src/lib/global.d.ts"
+  ]
+}

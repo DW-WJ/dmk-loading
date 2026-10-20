@@ -54,7 +54,8 @@ export {
   mergeOptions,
   buildCtx,
   findSlotByToken,
-  localSlots
+  localSlots,
+  evalValue
 } from './manager'
 
 export type { OpenHandle } from './manager'
