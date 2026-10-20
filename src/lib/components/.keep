@@ -1,0 +1,1 @@
+:style="{ '--vtl-color': options.color, '--vtl-text-color': options.textColor }"

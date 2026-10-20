@@ -1,0 +1,37 @@
+[
+  {
+    "id": "full",
+    "label": "全量引入（import * as）",
+    "code": "import * as ALL from 'lib'\nconsole.log(Object.keys(ALL).length)",
+    "raw": 25793,
+    "gz": 7952
+  },
+  {
+    "id": "all-named",
+    "label": "具名全量（引全部 API）",
+    "code": "import { openLoading, closeLoading, closeAllLoading, setLoadingText, updateLoading, isLoading, hasLoading, withLoading, withLoadingOn, setDefaultOptions, getDefaultOptions, buildCtx, findSlotByToken, preset, presets, LoadingPreset, TransitionLoading, mountLoadingHost, createLoading, vLoading, LoadingMask, LoadingHost } from 'lib'\nconsole.log(openLoading,closeLoading,closeAllLoading,setLoadingText,updateLoading,isLoading,hasLoading,withLoading,withLoadingOn,setDefaultOptions,getDefaultOptions,buildCtx,findSlotByToken,preset,presets,LoadingPreset,TransitionLoading,mountLoadingHost,createLoading,vLoading,LoadingMask,LoadingHost)",
+    "raw": 24222,
+    "gz": 7530
+  },
+  {
+    "id": "on-demand",
+    "label": "按需两个（open + close）",
+    "code": "import { openLoading, closeLoading } from 'lib'\nconsole.log(openLoading, closeLoading)",
+    "raw": 7769,
+    "gz": 2753
+  },
+  {
+    "id": "single",
+    "label": "按需一个（只要 open）",
+    "code": "import { openLoading } from 'lib'\nconsole.log(openLoading)",
+    "raw": 6146,
+    "gz": 2352
+  },
+  {
+    "id": "core-only",
+    "label": "core-only（只要状态机）",
+    "code": "import { openLoading } from 'lib/core'\nconsole.log(openLoading)",
+    "raw": 77,
+    "gz": 88
+  }
+]

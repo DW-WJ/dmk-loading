@@ -1,0 +1,15 @@
+# 依赖（体积大，可由 package.json 重建）
+node_modules/
+
+# 本地 npm 配置（含 registry/bin-links 等本机偏好；若被写入 token 会泄密，绝不入库）
+.npmrc
+
+# 系统 / 编辑器
+.DS_Store
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+
+# TypeScript 增量缓存
+*.tsbuildinfo

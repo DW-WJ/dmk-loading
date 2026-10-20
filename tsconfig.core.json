@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist/core",
+    "noEmit": false,
+    "rootDir": "src/lib/core"
+  },
+  "include": [
+    "src/lib/core/**/*.ts",
+    "src/env.d.ts"
+  ]
+}
